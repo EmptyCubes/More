@@ -29,13 +29,13 @@ namespace More.UnitTests
                 new Dictionary<string, ILookupTableContext>
                 {
                     {
-                        "ISO",
-                        new SqlLookupTableContext(ConfigurationManager.ConnectionStrings["Dev.IsoDb"].ConnectionString)
-                    },
-                    {
                         "RuleEngineUser",
                         new SqlLookupTableContext(
                             ConfigurationManager.ConnectionStrings["Dev.RuleEngineDb"].ConnectionString)
+                    },
+                    {
+                        "ISO",
+                        new SqlLookupTableContext(ConfigurationManager.ConnectionStrings["Dev.IsoDb"].ConnectionString)
                     }
                 },
                 new DateTime(2015, 10, 1), false);
@@ -50,26 +50,11 @@ namespace More.UnitTests
             const string tableName2 = "CCI_AgeTier";
             const string schemaName2 = "RuleEngineUser";
 
-            var repository = new SqlLookupTableRepository(
-                new Dictionary<string, ILookupTableContext>
-                {
-                    {
-                        "ISO",
-                        new SqlLookupTableContext(ConfigurationManager.ConnectionStrings["Dev.IsoDb"].ConnectionString)
-                    },
-                    {
-                        "RuleEngineUser",
-                        new SqlLookupTableContext(
-                            ConfigurationManager.ConnectionStrings["Dev.RuleEngineDb"].ConnectionString)
-                    }
-                },
-                new DateTime(2015, 10, 1), false);
-
-            var table = repository.GetLookupTable(tableName1, schemaName1, null);
+            var table = _multipleRepository.GetLookupTable(tableName1, schemaName1, null);
             Assert.IsNotNull(table);
             Assert.AreEqual(table.Name, tableName1);
 
-            table = repository.GetLookupTable(tableName2, schemaName2, null);
+            table = _multipleRepository.GetLookupTable(tableName2, schemaName2, new DateTime(2014,01,01));
             Assert.IsNotNull(table);
             Assert.AreEqual(table.Name, tableName2);
         }
