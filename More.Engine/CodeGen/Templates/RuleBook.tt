@@ -1,0 +1,36 @@
+﻿<#@ template language="C#" inherits="RatingEngineCodeTemplateBase<RuleBookTemplateModel>" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="More.Engine" #>
+<#@ import namespace="More.Engine.Model" #>
+<#@ import namespace="More.Engine.CodeGen.Templates.Model" #>
+
+public class <#= Model.ClassName #> : <#= Model.BaseClassName #> {
+		 public override IEnumerable<InputRequirement> GetInputRequirements() {
+			<# if (Model.Rules != null) { #>
+			<# var externalInputs = Model.Rules.SelectMany(p=>p.ExternalInputs).ToArray(); #>
+			<#if (externalInputs.Length > 0) {#>
+				<# foreach (var externalInput in externalInputs) { #>
+				 yield return new InputRequirement() { Name = "<#=externalInput#>" };
+				<# } #>
+			<# } else {#>
+				yield break;
+			<#}#>
+			<# } else { #>
+				yield break;
+			<# } #>
+		 }
+		protected override RuleBookResult InternalExecute(Dictionary<string,object> inputs) {
+		   <# Context.DeclaredVariables.PushContext(); #>
+<# if (Model.Rules != null) WriteTemplate<RuleBookRules,IEnumerable<RuleEngineRule>>( Model.Rules ); #>
+		   <# Context.DeclaredVariables.PopContext(); #>
+		    return Result;
+		}
+
+		
+
+
+
+}

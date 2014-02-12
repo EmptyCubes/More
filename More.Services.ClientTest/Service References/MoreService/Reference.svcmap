@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bff82c29-8e6a-43a4-9583-ddfa7ac58008" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://ccifldeviis01/RulesEngine/MoreService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MoreService1.wsdl" MetadataType="Wsdl" ID="b5062636-f19e-443c-a000-5ebafac7279d" SourceId="1" SourceUrl="http://ccifldeviis01/RulesEngine/MoreService.svc?wsdl" />
+    <MetadataFile FileName="MoreService5.xsd" MetadataType="Schema" ID="0e9d58ad-83cc-41bb-a090-e05fe5ea6d2c" SourceId="1" SourceUrl="http://ccifldeviis01/RulesEngine/MoreService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MoreService51.xsd" MetadataType="Schema" ID="260e37ab-eee8-48b1-9352-16b02509e5eb" SourceId="1" SourceUrl="http://ccifldeviis01/RulesEngine/MoreService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MoreService52.xsd" MetadataType="Schema" ID="8b8adae6-bf34-4078-be5e-3912386aa49a" SourceId="1" SourceUrl="http://ccifldeviis01/RulesEngine/MoreService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MoreService53.xsd" MetadataType="Schema" ID="08725af7-abb6-42f1-b861-9e143d129808" SourceId="1" SourceUrl="http://ccifldeviis01/RulesEngine/MoreService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MoreService1.disco" MetadataType="Disco" ID="e248f15e-0f26-481e-860a-2451e895f0f2" SourceId="1" SourceUrl="http://ccifldeviis01/RulesEngine/MoreService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

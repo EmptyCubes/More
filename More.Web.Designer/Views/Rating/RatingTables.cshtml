@@ -1,0 +1,11 @@
+﻿@using Carolina.Framework.Models.Rating
+
+@model IEnumerable<LookupTableModel>
+<div class="light-bar">
+<a id="add-rate-table" href="#" class="ui-button" onclick="rateTableProperties(0,showDialog(function(d) { saveRateTable('#rateTableForm',tablesMode); }));">Add Rate Table</a>
+<a id="import-rate-table" href="#" class="ui-button" onclick="importRatingTable(0,showDialog(function(d) { importRatingTableData('#ratingTableImportForm',tablesMode); }));">Import Rate Table</a>
+</div>
+@foreach (var ratingTable in Model.OrderBy(p=>p.Name))
+{
+    <a class="" href="#" style="display:block;font-size: 12px; font-weight: normal !important;padding: 4px; border-bottom: solid 1px #f1f1f1;" onclick="loadRatingTable('@(ratingTable.Id)', function(d) { $('#rating-table-form').html(d); currentRateTableId = '@(ratingTable.Id)'; currentRateTableChangeId = '@(ratingTable.ChangeId)';HandleReadOnly(); })">@ratingTable.Name</a>
+}

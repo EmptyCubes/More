@@ -1,0 +1,14 @@
+﻿@using More.Engine.Evaluation
+@model IRatingTraceInformation
+@if (Model is RatingTraceInformation)
+{
+    var traceItem = Model as RatingTraceInformation;
+    <div class="" onclick="$(this).next().toggleClass('hide');$(this).toggleClass('ui-selected');" style="cursor: pointer; border-bottom: solid 1px #ccc;border-top: solid 1px #fff; padding: 4px; font-size: 11px !important;"><span><b><a href="#" onclick='visitRule("@(traceItem.Id)")'>
+    @traceItem.ContextId - @traceItem.LoopContext @traceItem.Description</a></b> => @traceItem.Expression => <b>@traceItem.Value </b></span></div>
+}
+<div style="margin-left:20px;" class="@(Model is RatingTraceInformation ? "hide" : "")">
+@foreach (var traceItem in Model.TraceInformation)
+{
+    @Html.Partial("TraceInfo",traceItem)
+}
+</div>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{01D3C9DB-0084-484F-BFCB-84E98AC424D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>More.Application.Entity</RootNamespace>
+    <AssemblyName>More.Application.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FlatTableLookups\FlatTableQueries.cs" />
+    <Compile Include="MoreLookupTableEntities.cs" />
+    <Compile Include="FlatTableLookups\FlatTableRatingConfigStrategy.cs" />
+    <Compile Include="MoreLookupTables1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MoreLookupTables.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="MoreRulesEngine.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MoreRulesEngine.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EntityRulesEngineRepository.cs" />
+    <Compile Include="Repository\MongoLookupTableCommand.cs" />
+    <Compile Include="Repository\MongoLookupTableContext.cs" />
+    <Compile Include="Repository\MongoLookupTableRepository.cs" />
+    <Compile Include="Repository\ILookupTableContext.cs" />
+    <Compile Include="Repository\ITableContextCommand.cs" />
+    <Compile Include="Repository\LookupTableAdapter.cs" />
+    <Compile Include="Repository\RuleEngineTable.cs" />
+    <Compile Include="Repository\SqlLookupTableCommand.cs" />
+    <Compile Include="Repository\SqlLookupTableContext.cs" />
+    <Compile Include="Repository\SqlLookupTableRepository.cs" />
+    <Compile Include="Repository\SqlWhereClauseItem.cs" />
+    <Compile Include="TableBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="MoreRulesEngine.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MoreRulesEngine.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="MoreLookupTables.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MoreLookupTables1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Evaluant.Calculator\NCalc.csproj">
+      <Project>{4652FE66-9698-416A-8CC9-87340D683E7A}</Project>
+      <Name>NCalc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\More.Engine\More.Engine.csproj">
+      <Project>{F5A6C82E-EBAA-4B5B-81CC-541252FF2B3C}</Project>
+      <Name>More.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\More.Application.BaseModel\More.Application.BaseModel.csproj">
+      <Project>{BBD1DC1C-D69D-46BF-BCE3-FA77C7FC4D1C}</Project>
+      <Name>More.Application.BaseModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MoreLookupTables.sql" />
+    <Content Include="MoreRulesEngine.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

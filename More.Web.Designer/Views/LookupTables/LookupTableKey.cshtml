@@ -1,0 +1,23 @@
+﻿@using More.Web.Designer.Helpers
+@model LookupTableKeyModel
+@using (Ajax.BeginForm("SaveLookupTableKey", "LookupTables", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace, 
+    UpdateTargetId = "middle-center",
+    //OnSuccess = "LookupRowAdded"
+}))
+{
+    @Html.HiddenFor(model => model.TableId)
+    @Html.HiddenFor(model => model.TableName)
+    @Html.HiddenFor(model => model.Name)
+
+    
+    <div class="editor-field-group">
+        <div class="editor-field">
+            @Html.DropDownList("LookupType", EnumHelpers.GetEnumSelectList<LookupType>())
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}

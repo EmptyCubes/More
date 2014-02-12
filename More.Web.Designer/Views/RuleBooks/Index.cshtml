@@ -1,0 +1,13 @@
+﻿@model IEnumerable<RuleBookModel>
+           <div class="light-bar">
+    <div style="width: 50%; float: left;">
+        Rule Books
+    </div>
+    <div style="width: 50%; float: left; text-align: right;">
+        @Ajax.ActionLink("Add Rule Book", "Index", "RuleBooks", new { id = 0 }, new AjaxOptions() { UpdateTargetId = "modal-dialog", OnSuccess = "AddRuleBookFormLoaded"}, new { id = "add-rule-book-link", @class="button" })
+    </div>
+    
+    <div class="clear">
+    </div>
+</div>
+@Html.Partial("RuleBooks",Model.Where(p=>p.BaseChangeId == null))

@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href='https://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet'
+        type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css' />
+    <link href="@Url.Content("~/Content/css/styles.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/jquery.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/theme.css")" rel="stylesheet" type="text/css" />
+    @*<link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />*@
+    <link href="@Url.Content("~/Content/css/absolution.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/jquery.contextmenu.css")" rel="stylesheet" type="text/css" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.5.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+   @* <script src="@Url.Content("~/Scripts/jquery.meio.mask.js")" type="text/javascript"></script>*@
+    <script src="@Url.Content("~/Scripts/jquery.blockUI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.contextmenu.js")" type="text/javascript"></script>
+    @if (IsSectionDefined("include"))
+    {
+        @RenderSection("include", false)
+    }
+    <script type="text/javascript">
+        window.sessionTimeout = @Session.Timeout;
+        $(function () {
+            window.outerLayout = $('body').layout({
+                center__paneSelector: ".outer-center"
+                , west__paneSelector: ".outer-west"
+                , east__paneSelector: ".outer-east"
+                , west__size: @(ViewBag.WestSize ?? 225)
+                , east__size: @(ViewBag.EastSize ?? 300)
+                , south__size: @(ViewBag.SouthSize ?? 0)
+                , north__size: @(ViewBag.NorthSize ?? 29)
+                , spacing_open: 0  // ALL panes
+                , spacing_closed: 0  // ALL panes
+                , north__spacing_open: 0
+                , south__spacing_open: 0
+                , west__spacing_open: @(ViewBag.WestSpacingOpen ?? 12)
+                , east__spacing_open: @(ViewBag.EastSpacingOpen ?? 12)
+                , west__spacing_closed: @(ViewBag.WestSpacingClosed ?? 12)
+                , east__spacing_closed: @(ViewBag.EastSpacingClosed ?? 12)
+                //  , east__spacing_closed: 4
+                , center__onresize: "middleLayout.resizeAll"
+            });
+
+            window.middleLayout = $('div.outer-center').layout({
+                center__paneSelector: ".middle-center"
+                , west__paneSelector: ".middle-west"
+                , east__paneSelector: ".middle-east"
+                , west__size: @(ViewBag.InnertWestSize ?? 0)
+                , east__size: @(ViewBag.InnertEastSize ?? 0)
+                , spacing_open: 0  // ALL panes
+                , spacing_closed: 0 // ALL panes
+                , center__onresize: "innerLayout.resizeAll"
+            });
+            
+                
+              
+        });
+    </script>
+    @if (IsSectionDefined("init"))
+    {
+        @RenderSection("init", false)
+    }
+</head>
+<body>
+    <div id="modal-dialog"></div>
+    <div class="outer-east">
+        @if (IsSectionDefined("east"))
+        {
+            @RenderSection("east")
+        }
+    </div>
+    <div class="outer-center">
+        <div id="middle-center" class="middle-center">
+            @RenderBody()
+        </div>
+        <div id="middle-west" class="middle-west">
+            <!-- Put secondary element here for the menu  Ex. (Jquery Menu iOs Menu can go here expanding if needed)-->
+            <!-- This can be hidden for other clients if needed -->
+            <div>
+                @if (IsSectionDefined("innerWest"))
+                {
+                    @RenderSection("innerWest")
+                }</div>
+        </div>
+        @if (IsSectionDefined("innerSouth"))
+        {
+            <div id="middle-south">
+                @RenderSection("innerSouth")
+            </div>
+        }
+    </div>
+    <div class="outer-west">
+        @if (IsSectionDefined("west"))
+        {
+            @RenderSection("west")
+        }
+    </div>
+    <div class="ui-layout-north">
+        
+                @RenderSection("north")
+      
+@* <div id="top-right">
+            <!-- Put anything you want to display on the top right side of the page here -->
+            @if (IsSectionDefined("north"))
+            {
+                @RenderSection("north")
+            }
+        </div>*@
+    </div>
+    <div class="ui-layout-south">
+        @if (IsSectionDefined("bottomLeft"))
+        {
+            <div id="bottom-left">
+                @RenderSection("bottomLeft")
+            </div>
+            <div id="bottom-right">
+                <!-- Put anything you want to display on the top right side of the page here -->
+                @if (IsSectionDefined("bottomRight"))
+                {
+                    @RenderSection("bottomRight")
+                }
+            </div>
+        }
+        @if (IsSectionDefined("south"))
+        {
+            @RenderSection("south")
+        }
+        <div class="clear">
+        </div>
+    </div>
+    
+</body>
+</html>

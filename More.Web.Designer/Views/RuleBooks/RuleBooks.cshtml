@@ -1,0 +1,10 @@
+﻿@model IEnumerable<RuleBookModel>
+
+
+@foreach (var baseKey in Model)
+{
+    @Ajax.ActionLink(baseKey.Name, "Index", "Rules", new { ruleBookId = baseKey.Id }, new AjaxOptions() { UpdateTargetId = "middle-center", OnSuccess = "RuleBookLoaded"}, new { @class = "ui-item ui-corner-all rule-book-item" })
+    <div style="padding-left: 10px">
+        @Html.Partial("RuleBooks", baseKey.DerivedRuleBooks)
+    </div>
+}

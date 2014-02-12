@@ -1,0 +1,21 @@
+﻿@using Carolina.Framework.Models.Rating
+@model LookupTableKeyModel
+@using (Html.BeginForm("SaveLookupTableKey", "Rating", FormMethod.Post, new { id = "LookupTableKeyForm" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ChangeId)
+    @Html.HiddenFor(model => model.FactorTableChangeId)
+    @Html.HiddenFor(model => model.FactorTableId)
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>@Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+  
+}

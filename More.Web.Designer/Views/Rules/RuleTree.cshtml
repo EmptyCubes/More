@@ -1,0 +1,195 @@
+﻿@model IEnumerable<RuleEngineRule>
+@{
+    var stepInto = ViewBag.StepInto;
+    var minimalView = false; // string.IsNullOrEmpty(stepInto);
+    DateTime rulebookdate = ViewBag.CurrentRuleBookEffectiveDate;
+    
+}
+@foreach (var treeItem in Model.OrderBy(p => p.Children.Count > 0))
+{
+    var allowStep = treeItem.Id == stepInto || ViewBag.ForceStep == true || string.IsNullOrEmpty(stepInto);
+    var unforce = false;
+    var hasSyntaxError = treeItem.HasErrors;
+
+    //var isNew = treeItem.IsNew;// treeItem.Tag == "1" && (treeItem.EffectiveDate == rulebookdate) && !treeItem.IsOverride && (treeItem.RuleBookId == ViewBag.CurrentRuleBookId);
+    var isOverride = treeItem.IsOverride;// && (treeItem.RuleBookId == ViewBag.CurrentRuleBookId);
+    var isNew = treeItem.IsNew;
+    var isChange = treeItem.IsChange;// !isNew && !isOverride && treeItem.Tag != "1";
+    var isBase = treeItem.IsBase;
+    if ((ViewBag.ForceStep == null || ViewBag.ForceStep == false) && allowStep)
+    {
+        ViewBag.ForceStep = true;
+        unforce = true;
+    }
+    if (minimalView && treeItem.Children.Count() > 0)
+    {
+    <div class="clear">
+    </div>
+    }
+    <a class="ui-item expression-tree-node ui-corner-all ui-draggable 
+                @(allowStep ? "" : "hide") 
+                @( treeItem.Children.Count < 1 ? "" : "rule-container rating-rule-name") 
+                @(treeItem.IsFormsAttachment ? "forms-attachment-item" : "" )
+                @(treeItem.HasErrors ? "expression-tree-node-error" : "" )
+                "
+       assignParentUrl="@Url.Action("AssignRuleParent","Rules",new {ruleId = treeItem.Id})"
+       getCodeUrl="@Url.Action("RuleExpression","Rules", new { ruleId = treeItem.Id })"
+       saveExpressionUrl="@Url.Action("SaveRuleExpression","Rules", new { ruleId = treeItem.Id})"
+        
+       deleteUrl="@if (!isBase)
+                  {
+                      @Url.Action("DeleteRule", "Rules", new {ruleId = treeItem.Id})
+                  }"
+       propertiesUrl = "@Url.Action("Index","Rules",new {id=treeItem.Id})"
+       stepIntoUrl = "@Url.Action("StepIntoRule","Rules",new {id=treeItem.Id})"
+       name="@treeItem.Name"
+       isOverride ="@isOverride"
+       isChange ="@isChange"
+       isNew ="@isNew"
+
+       id="@treeItem.Id" changeId="@treeItem.ChangeId" ruleId="@treeItem.Id"
+        >
+        @if (isOverride)
+        {
+            <div class="note note-override ui-corner-all" style="float: left;">Override</div>    
+        }
+        @if (isChange)
+        {
+            <div class="note note-change ui-corner-all" style="float: left;">Change</div>    
+        }
+        @if (isNew)
+        {
+            <div class="note note-new ui-corner-all" style="float: left;">New</div>    
+        }
+        @if (isBase)
+        {
+            <div class="note note-base ui-corner-all" style="float: left;">Base</div>    
+        }
+        @if (treeItem.Children.Count > 0)
+        {
+            <span style="float: left; padding-right: 15px; padding: 4px;">
+                <img src="@Url.Content("~/Content/images/if.png")" style="float: left; margin-right: 5px;" />
+            </span>
+        }
+        else 
+        {
+            <span style="float: left; padding-right: 15px; padding: 4px;">
+                <img src="@Url.Content(treeItem.IsFormsAttachment ? "~/Content/images/form.png" : "~/Content/images/expression.png")" style="float: left; margin-right: 5px;" />
+            </span>
+            
+        }
+        @if (minimalView)
+        {
+            <span style="float: left; padding-right: 15px; padding: 4px;" onmouseover="$(this).next().removeClass('hide');"
+                  onmouseout="$(this).next().addClass('hide');">
+                @treeItem.Name
+            </span>
+        
+        }
+        else
+        {
+            <span style="padding: 4px;" onmouseout="$(this).next().addClass('hide');" onmouseover="$(this).next().removeClass('hide');">
+                <div class="rating-rule-name ui-corner-left" style="width: 200px; float: left; font-weight: bold;">
+                    @treeItem.Name</div>
+                <div class="rating-rule-expression" style="float: left; padding-top: 4px; font-weight: normal !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               overflow: hidden;">@Html.Raw(treeItem.RuleExpression.Substring(0, Math.Min(treeItem.RuleExpression.Length, 100)) + (treeItem.RuleExpression.Length > 100 ? "... <b>[Click To See More]</b>" : ""))</div>
+            </span>
+            
+        }
+        <div class="@(hasSyntaxError ? "" : "hide") rule-tooltip ui-corner-all" style="padding: 10px; position: absolute;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         margin-left: 200px; border: solid 1px #334477; background: white;">
+            @if (hasSyntaxError)
+            {
+                foreach (var error in treeItem.Errors)
+                {
+                    <span style="color: #411 !important;"><b>@error.Type: </b> @error.Message</span>
+                }
+                    
+            }
+            else
+            {
+                <table>
+                    <tr>
+                        <td style="text-align: right; font-weight: bold;">Expression:</td><td>@treeItem.ParsedExpression.ToString()</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; font-weight: bold;">
+                            All Inputs:
+                        </td>
+                        <td>
+                            <span>
+                                @foreach (var i in treeItem.AllInputs)
+                                {
+                                    if (treeItem.Inputs.Contains(i))
+                                    {
+                                        <b>@i</b>
+                                    }
+                                    else
+                                    {
+                                        <span>@i</span>
+                                    }
+                                    @:,
+                                }
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; font-weight: bold;">
+                            Inputs:
+                        </td>
+                        <td>@string.Join(", ", treeItem.Inputs)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; font-weight: bold;">
+                            External Inputs:
+                        </td>
+                        <td>@string.Join(", ", treeItem.ExternalInputs)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; font-weight: bold;">
+                            Child External Inputs:
+                        </td>
+                        <td>@string.Join(", ", treeItem.ChildrenExternalInputs)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;font-weight: bold;">
+                            Lookups:
+                        </td>
+                        <td>@string.Join(", ", treeItem.Lookups)
+                        </td>
+                    </tr>
+                </table>     
+            }
+                
+        </div>
+        @if (!string.IsNullOrEmpty(treeItem.LoopContext))
+        {
+            <span style="float: right; padding-right: 15px; padding: 4px;">
+                <img src="@Url.Content("~/Content/images/Loop.png")" style="float: left;margin-right: 5px;" />
+                @treeItem.LoopContext
+            </span> 
+            
+        }
+         
+    </a>
+    
+    <div class="expression-tree-node-container ui-corner-all ui-draggable" style="margin-left: 15px;">
+        @if (treeItem.Children.Count() > 0)
+        {
+           
+
+            @Html.Partial("RuleTree", treeItem.Children)
+            <div class="clear">
+            </div>
+         
+        }
+    </div>
+    
+        if (unforce)
+        {
+            ViewBag.ForceStep = false;
+        }
+}

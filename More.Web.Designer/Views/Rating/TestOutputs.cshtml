@@ -1,0 +1,44 @@
+﻿@using Carolina.Framework
+@model IDictionary<string, object>
+@foreach (var item in Model)
+{
+    <div style="font-size: 11px;">
+        <span><span>@item.Key => </span>
+            @if (item.Value is IList<object>)
+            {
+                var items = ((IList<object>)item.Value);
+                var index = 0;
+                <span style="color: #8989cc; cursor: pointer;" onclick="$(this).next().toggleClass('hide');">
+                    Show/Hide</span>
+                <div style="margin-left: 20px;" class="hide child">
+                    @foreach (var subItem in items)
+                    {
+                
+              
+                        <span>[@index] =></span>
+                        <div style="margin-left: 20px;" class="child">
+                            @Html.Partial("TestOutputs", subItem as SerializableDictionary<string, object>)
+                        </div>
+             
+              
+                        index++;
+                    }
+                </div>
+            }
+            else if (item.Value is Dictionary<string, object>)
+            {
+                var items = ((IDictionary<string,object>)item.Value);
+                <div style="margin-left: 20px;" class="child">
+                    @foreach (var subItem in items)
+                    {
+                        <span>@subItem.Key => @subItem.Value</span>
+                    }
+                </div>
+            }
+            else
+            {
+                <span>@item.Value</span>
+            }
+        </span>
+    </div>
+}

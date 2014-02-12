@@ -1,0 +1,85 @@
+﻿@model IEnumerable<RuleBookAssemblyModel>
+<div class="light-bar" style="font-size: 18px !important; color: #444;">
+     <div style="width: 50%; float: left;">
+        Rule Assemblies
+    </div>
+    <div style="width: 50%; float: left; text-align: right;">
+        @Ajax.ActionLink("Add Assembly", "AddAssembly", "Assemblies",
+        null, new AjaxOptions()
+                            {
+                                UpdateTargetId = "modal-dialog",
+                                OnSuccess = "AddAssemblyFormLoaded",
+                            }, new { id = "add-lookup-link", @class = "button" })
+      
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div style="padding: 12px;">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Effective Date
+            </th>
+            <th>
+                Last Compile
+            </th>
+            <th>
+                Published
+            </th>
+            <th>
+            </th>
+        </tr>
+        @foreach (var ratingAssembly in Model)
+        {
+            <tr style="@(ratingAssembly.EffectiveDate.Equals(ViewBag.MissionControlDate) ? "background-color: #7788cc; font-weight: bold;" : string.Empty)">
+                <td>@ratingAssembly.Name
+                </td>
+                <td>@ratingAssembly.EffectiveDate.ToString("MMMM dd")
+                </td>
+                <td>@ratingAssembly.LastCompileDate
+                </td>
+                <td>@(ratingAssembly.Published ? "Yes" : "No")
+                </td>
+                <td>
+                @*@if (!(ratingAssembly.Published))
+                {*@
+                    @Ajax.ActionLink("Compile", "Compile", "Assemblies",
+                                           new { effectiveDate = ratingAssembly.EffectiveDate }, new AjaxOptions()
+                                                                                                   {
+                                                                                                       UpdateTargetId = "modal-dialog",
+                                                                                                        OnSuccess = "ShowModalDialog",
+                                                                                                   }, new { id = "compile-assembly-link", @class = "button" })
+                
+                       @Ajax.ActionLink("Publish", "PublishAssembly", "Assemblies",
+                     new { effectiveDate = ratingAssembly.EffectiveDate }, new AjaxOptions()
+                     {
+                         UpdateTargetId = "middle-center",
+                         //OnSuccess = "ShowModalDialog",
+                     }, new { id = "compile-assembly-link", @class = "button" })
+               @* } *@
+                        @if (ViewBag.MissionControlDate.Equals(ratingAssembly.EffectiveDate))
+                        {
+
+                        }
+                        else
+                        {
+                             @Html.ActionLink("Set As Current Version", "SetAssembly", "Assemblies",
+                                                    new { effectiveDate = ratingAssembly.EffectiveDate }, new { id = "compile-assembly-link", @class = "button" })
+
+                        }
+                            
+                     
+                   @* <a href="#" onclick="compileRating('@(ratingAssembly.EffectiveDate)', function(d) { $.unblockUI(); alert(d); })" class="ui-button toolbar-button">Compile</a>
+                    @if (!ratingAssembly.Published)
+                    {
+                        <a href="#" onclick=" publishAssembly('@(ratingAssembly.EffectiveDate)', ratingAssembliesMode)" class="ui-button toolbar-button">Publish</a>
+                    }*@
+                </td>
+            </tr>
+        }
+    </table>
+</div>

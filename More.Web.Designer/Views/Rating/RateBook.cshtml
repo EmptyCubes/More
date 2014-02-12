@@ -1,0 +1,32 @@
+﻿@using More.Engine.Compiling
+@model RateBook
+@using (Html.BeginForm("SaveRatingRuleException", "Rating", FormMethod.Post, new { id = "ratingRuleExceptionForm" }))
+{
+    @Html.HiddenFor(p => p.Id)
+    @Html.HiddenFor(p => p.ChangeId)
+    @Html.HiddenFor(p => p.EffectiveDate)
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Name)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.RuleExpression)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.RuleExpression)
+        @Html.ValidationMessageFor(model => model.RuleExpression)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Active)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Active)
+        @Html.ValidationMessageFor(model => model.Active)
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}

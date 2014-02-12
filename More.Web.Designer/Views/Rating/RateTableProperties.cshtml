@@ -1,0 +1,63 @@
+﻿@model RatingTableModel
+@using (Html.BeginForm("SaveRateTable", "Rating", FormMethod.Post, new { id = "rateTableForm" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ChangeId)
+    @Html.HiddenFor(model => model.IsoName)
+
+
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>@Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        @* <div class="editor-field">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>*@
+
+    </div>
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+    </div>
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Keys)
+            </div>
+            @Html.EditorFor(model => model.Keys)
+            @Html.ValidationMessageFor(model => model.Keys)
+        </div>
+    </div>
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Columns)
+            </div>
+            @Html.EditorFor(model => model.Columns)
+            @Html.ValidationMessageFor(model => model.Columns)
+        </div>
+    </div> <div class="editor-field-group">
+               <div class="editor-field">
+                   <div class="editor-label">
+                       @Html.LabelFor(model => model.Active)
+                   </div>
+                   @Html.EditorFor(model => model.Active)
+                   @Html.ValidationMessageFor(model => model.Active)
+               </div>
+           </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}

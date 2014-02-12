@@ -1,0 +1,29 @@
+﻿@model RuleBookModel
+@using (Ajax.BeginForm("SaveRuleBook", "RuleBooks", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace, 
+    UpdateTargetId = "middle-center",
+    OnSuccess = "RuleBookAdded"
+}))
+{
+    @Html.HiddenFor(p => p.Id)
+    @Html.HiddenFor(p => p.ChangeId)
+    @Html.HiddenFor(p => p.EffectiveDate)
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Name)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+    <div class="editor-label">
+        @Html.Label("Base RuleBook")
+    </div>
+    <div class="editor-field">
+        @Html.DropDownList("BaseChangeId", ViewBag.RuleBooks as IEnumerable<SelectListItem>)
+        @Html.ValidationMessageFor(model => model.BaseChangeId)
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}

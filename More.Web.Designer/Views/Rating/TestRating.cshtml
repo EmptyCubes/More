@@ -1,0 +1,24 @@
+﻿@using More.Engine.Evaluation
+@model RatingResult
+<div class="ui-item">
+<b>Total Time: @(((TimeSpan)ViewBag.TotalTime).ToString())</b>
+</div>
+@foreach (var item in Model.Errors)
+{
+    <div class="ui-state-error error">@item.Message</div>
+}
+@foreach (var form in Model.Forms)
+{
+    <div style="padding: 4px;" class="item">
+        Form: @form.Name
+    </div>
+}
+
+<div style="padding: 4px;" >
+Trace Information
+@Html.Partial("TraceInfo", Model)
+</div>
+<div style="padding: 4px;" class>
+Results
+@Html.Partial("TestOutputs", Model.Results)
+</div>

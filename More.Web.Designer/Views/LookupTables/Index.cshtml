@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LookupTableModel>
+<div class="light-bar">
+    <div style="width: 50%; float: left;">
+        Lookup Tables
+    </div>
+    <div style="width: 50%; float: left; text-align: right;">
+        @Ajax.ActionLink("Add Lookup Table", "AddLookUpTableForm", "LookupTables",
+        null, new AjaxOptions()
+                            {
+                                UpdateTargetId = "modal-dialog",
+                                OnSuccess = "AddLookupFormLoaded",
+                            }, new { id = "add-lookup-link", @class = "button" })
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div style="width: 100%;">
+    <div id="table-groups-bar" class="hide">
+        <a id="table-groups-backbutton" href="javascript:void" onclick="tableGroupsBack()" class="button">Back</a>
+        <span>
+            <label>
+                Filter:
+                <input id="table-filter" onkeyup="filterTables($(this))" />
+            </label>
+        </span>
+    </div>
+    @foreach (var schema in Model.GroupBy(p => p.Properties.Schema, p => p).OrderBy(p => p.Key))
+    {
+        <div id="table-group-@schema.Key" class="table-group" group="@schema.Key" onclick="viewTableGroup($(this));">
+            <div style="font-weight: bold; padding: 5px;">@schema.Key : [ @schema.Count() Tables ]</div>
+
+            <div class="table-group-tables hide">
+                @foreach (var ratingTable in schema)
+                {
+                    <div id="lookup-link" class = "table-group-table" table="@ratingTable.Name">
+                        <div>
+                            @Ajax.ActionLink(ratingTable.Name, "Index", "LookupTables",
+                            new { id = ratingTable.ChangeId }, new AjaxOptions()
+                            {
+                                UpdateTargetId = "middle-center",
+                                OnSuccess = "LookupTableLoaded",
+                            }, new { @style = "padding: 5px; font-size:14px; font-weight: bold; " })
+                        </div>
+                        @*<div>@ratingTable.Description</div>*@
+                        <div style="font-size: 10px; padding: 8px;"><b>Effective Date:</b> @ratingTable.Properties.EffectiveDate</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                }
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    }
+    <div style="clear: both;"></div>
+</div>

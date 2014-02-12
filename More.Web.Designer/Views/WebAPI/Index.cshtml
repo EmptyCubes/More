@@ -1,0 +1,45 @@
+﻿<script type="text/javascript">
+    $(function () {
+
+        var inputs = {
+            "insuredCreditScore": 500,
+            "drivers": [
+                {
+                    "age": 33,
+                    "yearsExperience": 10,
+                    "numberOfMinors": 0,
+                    "numberOfPoints": 2,
+                    "yearsWithCurrentEmployer": 13,
+                    "referenceId": "11562607-efae-449a-96bd-bf3cf739eb39"
+                }
+            ]
+        };
+
+
+
+            ExecuteMoreRules("http://localhost:58419", "4/24/2013", "CCI_TierFactor", inputs, null, function (d) { console.log(d); alert(d.CalculateTierFactor.Drivers[0].TierAverage); });
+        // ExecuteMoreRules("http://ccifldeviis01/MoreRulesApi", "4/24/2013", "CCI_TierFactor", inputs, null, function (d) { console.log(d); });
+    });
+    
+    function ExecuteMoreRules(url, effectiveDate, ruleBook, inputs, selectItems, handleResult) {
+        $.support.cors = true;
+        $.ajax(
+            {
+                type: "POST",
+                url: url + "/api/values",
+                data: //JSON.stringify(
+                    {
+                    effectiveDate: effectiveDate,
+                    rulebook: ruleBook,
+                    items: selectItems,
+                    data: JSON.stringify(inputs)
+                }
+                //)
+                ,
+                success: function (d) { handleResult(jQuery.parseJSON(d)); },
+                dataType: "json"
+            }
+    );
+    }
+   
+</script>

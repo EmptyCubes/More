@@ -1,0 +1,42 @@
+﻿@using More.Engine.Compiling
+@model IEnumerable<RuleEngineRule>
+
+<div class="light-bar">
+    <a href="#" id="toolbar-button-run" class="button play">
+        Test
+    </a>
+    <a href="#" id="toolbar-button-build" class="button spark">
+        Compile
+    </a>
+    <div class="vertical-splitter"></div>
+    <a id="add-rule" class="button add" href="#" onclick="getRule(0,showDialog(function() { saveRule(function(d) { $('#section-rules').html(d); initRatingRules(); }); }));">
+        Add Rule</a> <a id="delete-rule" class="button delete" href="#" onclick="deleteRule(currentId,rulesMode)">
+            Delete Rule</a> <a id="edit-rule" class="button edit" href="#">Edit Rule
+                Properties</a>
+    @if (ViewBag.StepInto != null && !string.IsNullOrEmpty((string)ViewBag.StepInto))
+    {
+        
+        <a id="step-into-rule" class="button back" href="#" onclick="stepIntoRule('', rulesMode)">
+            Back</a>
+    }
+    <div style="width: 300px; float: right;">
+       
+        <div id="detail-level" class="toolbar-item" style="float: right;">
+            <input id="detail-level-normal" type="radio" value="detail-normal" name="detail"
+                checked="checked" />
+            <label for="detail-level-normal">
+                Normal</label>
+            <input id="detail-level-full" type="radio" value="detail-full" name="detail" />
+            <label for="detail-level-full">
+                Full</label>
+        </div>
+        @* <input type="checkbox" id="DestructiveMode" @(ViewBag.DestructiveMode != null && ViewBag.DestructiveMode == true ? "checked" : "") /><label
+            for="DestructiveMode">Setup Mode</label>*@</div>
+    <div class="clear">
+    </div>
+</div>
+<div style="padding: 10px;">
+    <div class="expression-tree-node" changeid="">
+        Drag here to set to root</div>
+    @Html.Partial("RatingRuleItems", Model)
+</div>

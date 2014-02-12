@@ -1,0 +1,77 @@
+﻿@using More.Engine.Compiling
+@model LookupTable
+@{
+    var headers = Model.Keys.Concat(Model.Columns).ToArray();
+    var missionControlDate = (DateTime)ViewBag.MissionControlDate;
+}
+<div class="light-bar" style="font-size: 18px;">
+    <span>@Model.Name </span>
+</div>
+<div style="padding: 6px;">
+    <table style="width: @(Model.KeysAndColumns.Count() * 200)px;" cellspacing="0" cellpadding="5">
+        <tr>
+            @foreach (var key in Model.Keys)
+            {
+                <th class="ui-state-default" style="width: 110px; text-align: center; padding: 6px;">@key.Name
+                   @Ajax.ActionLink("Edit", "LookupTableKey", "LookupTables",
+        new { lookupTableName = Model.Name, lookupTableId = Model.Id, keyName = key.Name }, new AjaxOptions()
+                            {
+                                UpdateTargetId = "modal-dialog",
+                                OnSuccess = "ShowModalDialog",
+                            }, new { id = "add-lookup-row-link", @class = "button" })
+                </th>
+            }
+            @foreach (var column in Model.Columns)
+            {
+                <th class="ui-state-highlight" style="width: 110px; text-align: center; padding: 6px;">@column.Name
+                    @*   <a href="#" style="float: right;" onclick="deleteRateTableColumn(@column.ID, function() { })">X</a>*@
+                </th>
+            }
+            <th>
+            </th>
+        </tr>
+        @foreach (var row in Model.Rows)
+        {
+            <tr style="font-size: 12px !important;@(row.EffectiveDate == missionControlDate ? "font-weight: bold !important;background-color: #d1d1f1 !important;" : string.Empty)">
+                @foreach (var keyValue in row.KeyValues)
+                {
+                    <td style="text-align: center;">@keyValue.LowValue
+                        @if (keyValue.HighValue != null && keyValue.HighValue != int.MaxValue.ToString())
+                        {
+                            <span>- </span>@keyValue.HighValue
+                        }
+                    </td>
+                }
+                @foreach (var colValue in row.ColumnValues)
+                {
+                    <td style="text-align: center;">
+                        @colValue.Value
+                    </td>
+                }
+                <td style="width: 200px;">
+                    @Ajax.ActionLink("Edit", "LookupTableRow", "LookupTables",
+        new { lookupTableName = Model.Name, lookupTableId = Model.Id, id=row.RowId }, new AjaxOptions()
+                            {
+                                UpdateTargetId = "modal-dialog",
+                                OnSuccess = "ShowModalDialog",
+                            }, new { id = "add-lookup-row-link", @class = "button" })
+                            @Ajax.ActionLink("Delete", "DeleteLookupTableRow", "LookupTables",
+        new { lookupTableName = Model.Name, lookupTableId = Model.Id, id = row.RowId }, new AjaxOptions()
+                            {
+                                UpdateTargetId = "middle-center",
+                                //OnSuccess = "AddLookupRowFormLoaded",
+                            }, new { id = "add-lookup-row-link", @class = "button" })
+                   
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="light-bar">
+    @Ajax.ActionLink("Add Row", "LookupTableRow", "LookupTables",
+        new { lookupTableName = Model.Name, lookupTableId = Model.Id }, new AjaxOptions()
+                            {
+                                UpdateTargetId = "modal-dialog",
+                                OnSuccess = "AddLookupRowFormLoaded",
+                            }, new { id = "add-lookup-row-link", @class = "button" })
+</div>

@@ -1,0 +1,44 @@
+﻿@using More.Engine.Compiling
+@model RuleEngineRule
+@using (Html.BeginForm("SaveRule", "Rating", FormMethod.Post, new { id = "mainform" }))
+{
+    @Html.ValidationSummary(true)
+    <div class="form-container">
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.ChangeId)
+        @Html.HiddenFor(model => model.ParentChangeId)
+        @Html.HiddenFor(model => model.EffectiveDate)
+        @Html.HiddenFor(model => model.RuleBookId)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LoopContext)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LoopContext)
+            @Html.ValidationMessageFor(model => model.LoopContext)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RuleExpression)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RuleExpression)
+            @Html.ValidationMessageFor(model => model.RuleExpression)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Active)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Active)
+            @Html.ValidationMessageFor(model => model.Active)
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+    </div>
+}

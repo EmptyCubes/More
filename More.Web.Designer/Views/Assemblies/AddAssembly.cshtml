@@ -1,0 +1,23 @@
+﻿@model RuleBookAssemblyModel
+@using (Ajax.BeginForm("AddAssembly", "Assemblies", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace, 
+    UpdateTargetId = "middle-center",
+    OnSuccess = "AssemblyAdded"
+    
+})) {
+    @Html.ValidationSummary(true)
+    <div class="form-container">
+        @Html.HiddenFor(model => model.Id)
+        <div class="editor-label">
+            Effective Date:
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EffectiveDate)
+            @Html.ValidationMessageFor(model => model.EffectiveDate)
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+    </div>
+}

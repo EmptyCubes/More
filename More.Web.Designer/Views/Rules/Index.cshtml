@@ -1,0 +1,38 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<RuleEngineRule>
+<div class="light-bar">
+    
+    <div style="width: 50%; float: left;">
+        Rule Book: @ViewBag.CurrentRuleBookId: @ViewBag.CurrentRuleBook
+    </div>
+    <div style="width: 50%; float: left; text-align: right;">
+        @Ajax.ActionLink("Add Rule", "Index", "Rules", 
+            new { id = 0 }, new AjaxOptions()
+            {
+                UpdateTargetId = "modal-dialog", 
+                OnSuccess = "AddRuleFormLoaded",
+                                
+            }, new { id = "add-rule-link", @class="button" })
+        @Ajax.ActionLink("Test Rule Book", "TestForm", "Debug", 
+            new { ruleBookName = ViewBag.CurrentRuleBook }, new AjaxOptions()
+            {
+                UpdateTargetId = "modal-dialog", 
+                OnSuccess = "TestRuleBookFormLoaded",
+                                
+            }, new { id = "add-rule-link", @class="button" })
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="ui-widget">
+	<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+		<strong>Error:</strong> @ViewBag.ErrorMessage</p>
+	</div>
+    </div>
+}
+
+
+@Html.Partial("RuleTree", Model)

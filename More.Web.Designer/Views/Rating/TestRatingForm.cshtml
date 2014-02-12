@@ -1,0 +1,18 @@
+﻿@using (Html.BeginForm("TestRating","Rating",FormMethod.Post,new { id = "testRatingForm"}))
+{
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">Quote</div>
+            @Html.DropDownList("quoteId",ViewBag.Quotes as IEnumerable<SelectListItem>)
+        </div>
+    </div>
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">Quote</div>
+            @Html.TextBox("numberOfTimes","1")
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Test Rating"/>
+    </div>
+}

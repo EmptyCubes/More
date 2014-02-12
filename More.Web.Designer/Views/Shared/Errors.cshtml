@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CompilerErrorModel>
+           <div id="errors">
+@foreach (var error in Model)
+{
+    <div class="error">
+        @error.ErrorText
+        @error.Line : @error.Column
+    </div>
+}</div>

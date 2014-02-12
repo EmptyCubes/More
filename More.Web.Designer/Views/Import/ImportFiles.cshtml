@@ -1,0 +1,7 @@
+﻿@model IEnumerable<string>
+@foreach (var item in Model)
+{
+    <div>
+    <a href="#" onclick="selectImportFile('@item', importOptionsMode)">@item</a>
+    </div>
+}

@@ -1,0 +1,45 @@
+﻿@using Carolina.Framework.Models.Rating
+@model IEnumerable<RatingAssemblyModel>
+<div class="light-bar" style="font-size: 18px !important; color: #444;">
+    Rating Assemblies
+</div>
+<div style="padding: 12px;">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Effective Date
+            </th>
+            <th>
+                Last Compile
+            </th>
+            <th>
+                Published
+            </th>
+            <th>
+            </th>
+        </tr>
+        @foreach (var ratingAssembly in Model)
+        {
+            <tr>
+                <td>@ratingAssembly.Name
+                </td>
+                <td>@ratingAssembly.EffectiveDate.ToString("MMMM dd")
+                </td>
+                <td>@ratingAssembly.LastCompileDate
+                </td>
+                <td>@(ratingAssembly.Published ? "Yes" : "No")
+                </td>
+                <td>
+                    <a href="#" onclick="compileRating('@(ratingAssembly.EffectiveDate)', function(d) { $.unblockUI(); alert(d); })" class="ui-button toolbar-button">Compile</a>
+                    @if (!ratingAssembly.Published)
+                    {
+                        <a href="#" onclick=" publishAssembly('@(ratingAssembly.EffectiveDate)', ratingAssembliesMode)" class="ui-button toolbar-button">Publish</a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>

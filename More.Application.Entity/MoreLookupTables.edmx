@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Carolina.AppConfig.Rating.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="CarolinaAppConfigRatingDataStoreContainer" />
+        <Function Name="GetAllFactorTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetFactorTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EffectiveDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetNextFactorTableId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetTableColumns" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="More.Application.Entity" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MoreLookupTableEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="GetTableColumns" ReturnType="Collection(More.Application.Entity.GetTableColumns_Result)" />
+          <FunctionImport Name="GetNextFactorTableId" ReturnType="Collection(More.Application.Entity.GetNextFactorTableId_Result)" />
+          <FunctionImport Name="GetFactorTables" ReturnType="Collection(More.Application.Entity.GetFactorTables_Result)">
+            <Parameter Name="EffectiveDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllFactorTables" ReturnType="Collection(More.Application.Entity.GetAllFactorTables_Result)" />
+        </EntityContainer>
+        <ComplexType Name="GetTableColumns_Result">
+          <Property Type="String" Name="TableName" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="ColumnName" Nullable="true" MaxLength="128" />
+          <Property Type="Boolean" Name="IsKey" Nullable="true" />
+          <Property Type="String" Name="LookupType" Nullable="true" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="GetNextFactorTableId_Result">
+          <Property Type="Int32" Name="Column1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetFactorTables_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Boolean" Name="Active" Nullable="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="Guid" Name="ChangeId" Nullable="true" />
+          <Property Type="DateTime" Name="EffectiveDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TableName" Nullable="false" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="GetAllFactorTables_Result">
+          <Property Type="String" Name="TABLE_NAME" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Boolean" Name="Active" Nullable="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="Guid" Name="ChangeId" Nullable="true" />
+          <Property Type="DateTime" Name="EffectiveDate" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarolinaAppConfigRatingDataStoreContainer" CdmEntityContainer="MoreLookupTableEntities" >
+          <FunctionImportMapping FunctionImportName="GetTableColumns" FunctionName="Carolina.AppConfig.Rating.Data.Store.GetTableColumns">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="More.Application.Entity.GetTableColumns_Result">
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="IsKey" ColumnName="IsKey" />
+                <ScalarProperty Name="LookupType" ColumnName="LookupType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNextFactorTableId" FunctionName="Carolina.AppConfig.Rating.Data.Store.GetNextFactorTableId" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="More.Application.Entity.GetNextFactorTableId_Result">
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFactorTables" FunctionName="Carolina.AppConfig.Rating.Data.Store.GetFactorTables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="More.Application.Entity.GetFactorTables_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeId" ColumnName="ChangeId" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllFactorTables" FunctionName="Carolina.AppConfig.Rating.Data.Store.GetAllFactorTables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="More.Application.Entity.GetAllFactorTables_Result">
+                <ScalarProperty Name="TABLE_NAME" ColumnName="TABLE_NAME" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeId" ColumnName="ChangeId" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="RatingTables" />
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,85 @@
+﻿@using More.Engine.Compiling
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+    ViewBag.LeftSubExtras = false;
+    var readOnly = ViewBag.IsReadOnlyMode as bool? ?? false;
+    ViewBag.WestSize = 120;
+    ViewBag.EastSize = 0;
+    ViewBag.NorthSize = 45;
+    ViewBag.SouthSize = 150;
+    ViewBag.InnertWestSize = 0;
+    ViewBag.InnertEastSize = 0;
+    ViewBag.WestSpacingOpen = 0;
+    ViewBag.WestSpacingClosed = 0;
+    ViewBag.EastSpacingOpen = 0;
+    ViewBag.EastSpacingClosed = 0;
+
+}
+@{
+    var baseKeys = ViewBag.BaseKeys as IEnumerable<RuleBookModel>;
+    var currentBaseKey = ViewBag.CurrentBaseKey.ToString();
+}
+@section include {
+    <script src="@Url.Content("~/Scripts/CodeMirror/codemirror.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/Scripts/CodeMirror/util/simple-hint.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/Scripts/jquery.layout.min.js")" type="text/javascript" ></script>
+    @*<script src="@Url.Content("~/Scripts/Rating/RatingConfig-hint.js")" type="text/javascript" ></script>*@
+    <script src="@Url.Content("~/Scripts/CodeMirror/mode/less/less.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/Scripts/More.js")" type="text/javascript" ></script>
+    <link href="@Url.Content("~/Scripts/CodeMirror/util/simple-hint.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/more.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/configThemeLight.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/CodeMirror/codemirror.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/CodeMirror/neat.css")" rel="stylesheet" type="text/css" />
+}
+@section init {
+
+    <script type="text/javascript">
+        $(function () {
+            window.middleLayout.close('west');
+            window.outerLayout.close('south');
+            //window.outerLayout.close('north');
+        });
+    </script>
+}
+
+@RenderBody()
+@section north {
+    <div style="padding-top: 4px; float: left; width: 50%;">
+        <div style="float: left; width: 130px; font-weight: bold;">
+            <center><img style="margin-left: 7px;" src="@Url.Content("~/Content/images/logo.png")" alt="MORE" /></center>
+        </div>
+
+        @* <div id="effective-menu" class="button dropdown-list-menu" style=""><span>@ViewBag.MissionControlDate.ToString("MMM - dd - yyyy")</span></div>*@
+    </div>
+    @*@Ajax.ActionLink("Test","Index","Assemblies", null, new AjaxOptions() { UpdateTargetId = "middle-center" }, new { id="assemblies-link", @Class="button ui-corner-all" })*@
+    <div style="padding-top: 4px; float: right; width: 50%;">
+        <div style="float: right; width: 10px; height: 30px;"></div>
+        @*     @Ajax.ActionLink("Test","Index", "Debug", null, new AjaxOptions() { UpdateTargetId = "middle-center" }, new { id="assemblies-link", @Class="toolbar-button", @style="float: right;" })
+    @Ajax.ActionLink("Compile", "Compile", "Assemblies", null, new AjaxOptions() { UpdateTargetId = "middle-center" }, new { id = "assemblies-link", @Class = "toolbar-button", @style = "float: right;" })*@
+        <div id="effective-menu" class="button dropdown-list-menu" style="float: right;"><span>@ViewBag.MissionControlDate.ToString("MMM - dd - yyyy")</span></div>
+    </div>
+}
+
+@section west {
+
+    <div class="left-nav">
+        @Ajax.ActionLink("Assemblies", "Index", "Assemblies", null, new AjaxOptions() { UpdateTargetId = "middle-center" }, new { id = "assemblies-link", @Class = "nav-button ui-corner-left" })
+        @Ajax.ActionLink("Rule Books", "Index", "RuleBooks", null, new AjaxOptions() { UpdateTargetId = "middle-center" }, new { id = "rulebooks-link", @Class = "nav-button ui-corner-left nav-selected" })
+        @Ajax.ActionLink("Lookups", "Index", "LookupTables", null, new AjaxOptions() { UpdateTargetId = "middle-center" }, new { id = "lookups-link", @Class = "nav-button ui-corner-left" })
+    </div>
+    @if (IsSectionDefined("left"))
+    {
+        @RenderSection("left")
+    }
+}
+
+@section east {
+    @if (IsSectionDefined("right"))
+    {
+        @RenderSection("right")
+    }
+}
+@section south {
+    @Html.Partial("CodeEdit")
+}

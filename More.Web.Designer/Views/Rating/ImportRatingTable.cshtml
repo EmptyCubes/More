@@ -1,0 +1,25 @@
+﻿@using (Html.BeginForm("ImportRatingTableData", "Rating", FormMethod.Post, new { id = "ratingTableImportForm" }))
+{
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                Name</div>
+            @Html.TextBox("name")
+        </div>
+        <div class="editor-field">
+            <div class="editor-label">
+                Number Of Keys (From Left)</div>
+            @Html.TextBox("numberOfKeys")
+        </div>
+    </div>
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                Data</div>
+            @Html.TextArea("data")
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Import Data" />
+    </div>
+}

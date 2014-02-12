@@ -1,0 +1,23 @@
+﻿@model InputRequirement[] 
+@using (
+    Ajax.BeginForm( "TestRuleBook", "Debug",
+        new { ruleBookName = ViewBag.RuleBookName },  
+        new AjaxOptions()
+            {
+                InsertionMode = InsertionMode.Replace, 
+                UpdateTargetId = "middle-center",
+                OnSuccess = "TestRuleBookCompleted"
+            }))
+{
+    foreach (var input in Model) {
+    <div class="editor-label">
+        @input.Name
+    </div>
+    <div class="editor-field">
+        @Html.TextBox(input.Name)
+    </div>
+        }
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}

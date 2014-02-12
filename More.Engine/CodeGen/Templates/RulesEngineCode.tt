@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" inherits="RatingEngineCodeTemplateBase<RuleEngineCodeModel>" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="More.Engine" #>
+<#@ import namespace="More.Engine.Model" #>
+<#@ import namespace="More.Engine.CodeGen.Templates.Model" #>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using More.Engine;
+using More.Engine.Evaluation;
+using More.Engine.Model;
+namespace <#= Model.Namespace #> {
+public class CompiledRuleBookFactory : CompiledRuleBookFactoryBase {
+	public override DateTime EffectiveDate {
+		get {
+			return _effectiveDate ?? (_effectiveDate = new DateTime(<#= Model.EffectiveDate.ToString() #>));
+		}
+	}
+	public override CompiledRuleBookBase GetRuleBook(string name) {
+		<# Context.DeclaredVariables.PushContext(); #>
+
+		<# foreach (var ruleBook in Model.RuleBooks) { #>
+			if (name.Equals("<#=ruleBook.Name#>")) {
+				return new <#=ruleBook.Name#>RuleBook() { Factory = this };
+			}
+		<# } #>
+		<# Context.DeclaredVariables.PopContext(); #>
+		return null;
+	}
+}
+
+<# foreach (var ruleBook in Model.RuleBooks) { WriteTemplate<RuleBook, RuleBookTemplateModel>(ruleBook); } #>
+ 
+
+	public class CommonRuleBook : CompiledRuleBookBase {
+		public override IEnumerable<InputRequirement> GetInputRequirements() {
+			yield break;
+		}
+		protected override RuleBookResult InternalExecute(Dictionary<string,object> inputs) {
+			return Result;
+		}		<# foreach (var ruleBook in Model.RuleBooks) { #>		public Dictionary<string,object> <#=ruleBook.Name#>(params object[] args) {			return Execute("<#=ruleBook.Name#>",args);		}		<# } #>		#region LookupMethods
+			
+		<#if (Model.BaseLookupTables != null) {
+			foreach (var table in Model.BaseLookupTables) { #> 
+<#WriteTemplate<LookupTableMethod, LookupTable>(table); #>
+			<#} 
+		}#>
+					#endregion}
+
+}

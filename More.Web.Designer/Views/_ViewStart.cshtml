@@ -1,0 +1,7 @@
+﻿@{
+    Layout = (!Request.IsAjaxRequest()) ? "~/Views/Shared/_RatingLayout.cshtml" : null;
+    //Layout = !(!string.IsNullOrEmpty(Request["ajax"]) && Request["ajax"].ToUpper() == "TRUE") ? "~/Views/Shared/_Layout.cshtml" : null;
+    //Layout = "~/Areas/AppConfig/Views/Shared/_ConfigLayout.cshtml";
+    
+    // Layout = null;
+}

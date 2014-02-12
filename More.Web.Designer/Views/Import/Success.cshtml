@@ -1,0 +1,13 @@
+﻿@model List<string>
+<div>
+    <h3>
+        Successfully imported rating content!</h3>
+        <div style="height: 200px; overflow: auto;">
+    @foreach (var message in Model)
+    {
+        <div>
+            <h5>@message</h5>
+        </div>
+    }
+    </div>
+</div>

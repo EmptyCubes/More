@@ -1,0 +1,18 @@
+﻿<#@ template language="C#" inherits="RatingEngineCodeTemplateBase<More.Engine.Model.LookupTable>" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="More.Engine" #>
+<#@ import namespace="More.Engine.Model" #>
+<#@ import namespace="More.Engine.CodeGen.Templates.Model" #>
+<# 
+	string[] columnVars = Model.Keys.Select(p => "_" + StringUtils.StripAllButChars(p.Name)).ToArray(); 
+	var isOverride = Context.IsExceptionClass;
+
+#>
+
+
+		public <#=isOverride ? "override" : "virtual"#> object <#=Model.Name#>(string column, object <#=string.Join(", object ", columnVars)#>) {
+			return Lookup("<#=Model.Properties.Schema.ToString() #>", "<#=Model.Name#>()", column, <#=string.Join(", ", columnVars)#>);
+		}

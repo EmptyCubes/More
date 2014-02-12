@@ -1,0 +1,9 @@
+span.cm-comment { color: #a86; }
+span.cm-keyword { line-height: 1em; font-weight: bold; color: blue; }
+span.cm-string { color: #8c4 !important; }
+span.cm-builtin { line-height: 1em; font-weight: bold; color: #077; }
+span.cm-special { line-height: 1em; font-weight: bold; color: #0aa; }
+span.cm-variable { color: blue !important;font-weight: bold !important; }
+span.cm-number, span.cm-atom { color: blue !important;font-weight: bold !important; }
+span.cm-meta {color: #555;}
+span.cm-link { color: #3a3; }

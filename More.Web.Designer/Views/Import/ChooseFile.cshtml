@@ -1,0 +1,12 @@
+﻿@using (var frm = Html.BeginForm("ChooseFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-container">
+        <div class="editor-field">
+            <div class="editor-label">
+                Import file:
+            </div>
+            <input id="file" name="file" type="file" />
+        </div>
+        <input type="submit" class="button" value="Upload Document" />
+    </div>
+}

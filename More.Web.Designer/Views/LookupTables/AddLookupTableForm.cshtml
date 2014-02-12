@@ -1,0 +1,38 @@
+﻿@using (Ajax.BeginForm("AddLookUpTable", "LookupTables", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace, 
+    UpdateTargetId = "middle-center",
+    OnSuccess = "LookupAdded"
+}))
+{
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                Name</div>
+            @Html.TextBox("name")
+        </div>
+        <div class="editor-field">
+            <div class="editor-label">
+                Keys seperated by pipes (key1|key2)</div>
+            @Html.TextBox("keys")
+        </div>
+             <div class="editor-field">
+            <div class="editor-label">
+                Columns seperated by pipes (key1|key2)</div>
+            @Html.TextBox("columns")
+        </div>
+    </div>
+    <div class="editor-field-group">
+        <div class="editor-field">
+            <div class="editor-label">
+                Data (Optional)</div>
+            @Html.TextArea("data")
+        </div>
+    </div>
+    <span style="font-size: 10px;color: red;">
+        Id, ChangeId, EffectiveDate and Active column names are reserved.
+    </span>
+    <div>
+        <input type="submit" value="Create Table" />
+    </div>
+}

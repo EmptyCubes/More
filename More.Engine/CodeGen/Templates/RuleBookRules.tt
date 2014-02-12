@@ -1,0 +1,53 @@
+﻿<#@ template language="C#" inherits="RatingEngineCodeTemplateBase<System.Collections.Generic.IEnumerable<RuleEngineRule>>" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="More.Engine" #>
+<#@ import namespace="More.Engine.Model" #>
+<#@ import namespace="More.Engine.CodeGen.Templates.Model" #>
+<# foreach (var rule in Model) { #>
+	<# if (rule.Children.Count > 0) { #> 
+		<# if (!string.IsNullOrEmpty(rule.LoopContext)) { #>
+		<#WriteVariableDecleration(rule.Name);#> = GetInput("<#=rule.LoopContext#>");
+		<# } #>
+		if (<#=Context.ToCSharpExpression(rule.RuleExpression)#>) {
+		ConditionEntered("<#=rule.Name#>");
+		<# EnterContext(); #>
+		<# if (!string.IsNullOrEmpty(rule.LoopContext)) {  var itemName = rule.Name + "Item"; #>
+			LoopEntered("<#=rule.Name#>","<#=rule.LoopContext#>");
+			<#WriteVariableDecleration(rule.LoopContext);#> = GetInput("<#=rule.LoopContext#>");
+			
+			var <#=itemName#>Index = 0;
+			foreach (IDictionary<string,object> <#=itemName#> in (IList)<#=rule.LoopContext#>) {
+				LoopItemEntered(<#=itemName#>Index, "<#=rule.Name#>","<#=rule.LoopContext#>", <#=itemName#>);
+				<# EnterContext(); #>
+				<# var vars = rule.ChildrenExternalInputs.Where(x=>!Context.DeclaredVariables.Contains(x)); #>
+				<# foreach (var v in vars) { #>
+				<#WriteVariableDecleration(v);#> = GetInput("<#=v#>");
+				<#}#>
+				<# WriteTemplate<RuleBookRules,IEnumerable<RuleEngineRule>>( rule.Children); #>
+				<# LeaveContext(); #>
+				LoopItemExited(<#=itemName#>Index, "<#=rule.Name#>","<#=rule.LoopContext#>");
+				<#=itemName#>Index++;
+			}
+			LoopExited("<#=rule.Name#>","<#=rule.LoopContext#>");
+		<#} else { #>
+				<# var vars = rule.ChildrenExternalInputs.Where(x=>!Context.DeclaredVariables.Contains(x)); #>
+				<# foreach (var v in vars) { #>
+				<#WriteVariableDecleration(v);#> = GetInput("<#=v#>");			
+				<#}#>
+			<# WriteTemplate<RuleBookRules,IEnumerable<RuleEngineRule>>( rule.Children); #>
+		<#}#>
+		<# LeaveContext(); #>
+		ConditionExited("<#=rule.Name#>");
+		}
+	<#} else { #>
+		
+	    <#WriteVariableDecleration(rule.Name);#> =
+			StatementExecuted("<#=rule.Id#>", "<#=rule.Name #>", "<#=rule.Name #>",<#= StringUtils.ToLiteral(rule.RuleExpression) #>, 
+				 ()=>{ return <#=Context.ToCSharpExpression(rule.RuleExpression)#>; } // <------- <#=rule.Name#>
+				 );
+	<#}#>
+
+<# } #>

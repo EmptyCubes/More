@@ -1,0 +1,100 @@
+﻿@using More.Engine.Compiling
+@model ImporterModel
+@{
+    var baseKeys = ViewBag.BaseKeys as IEnumerable<RuleBookModel>;
+    var currentBaseKey = ViewBag.CurrentBaseKey.ToString();
+}
+<script type="text/javascript">
+    $(function () {
+        $('#import-tabs').tabs();
+    })
+</script>
+@using (Html.BeginForm("CompleteImport", "Import", FormMethod.Post, new { id = "importform" }))
+{
+    <div id="import-tabs">
+        <ul>
+            <li><a href="#Tables">Tables</a></li>
+            <li><a href="#Lists">Lists</a></li>
+            <li><a href="#Finish">Complete</a></li>
+        </ul>
+        <div id="Tables">
+            <table style="width: 100%;" cellspacing="0" cellpadding="5">
+                <tr>
+                    <th>
+                        <input type="checkbox" onclick="$('.tableCheckbox').prop('checked', $(this).prop('checked'));"
+                            checked="checked" />
+                    </th>
+                    <th class="ui-state-default">
+                        Name
+                    </th>
+                    <th class="ui-state-default">
+                        # Rows
+                    </th>
+                </tr>
+                @foreach (var row in Model.Tables)
+                {
+                    <tr>
+                        <td>
+                            <input class="tableCheckbox" type="checkbox" value="@row.Name" name="tables" checked="checked" />
+                        </td>
+                        <td>@row.Name
+                        </td>
+                        <td>@row.NumberRows
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="Lists">
+            <table style="width: 100%;" cellspacing="0" cellpadding="5">
+                <tr>
+                    <th>
+                        <input type="checkbox" onclick="$('.listCheckbox').prop('checked', $(this).prop('checked'));"
+                            checked="checked" />
+                    </th>
+                    <th class="ui-state-default">
+                        Name
+                    </th>
+                    <th class="ui-state-default">
+                        # Rows
+                    </th>
+                </tr>
+                @foreach (var row in Model.Lists)
+                {
+                    <tr>
+                        <td>
+                            <input class="listCheckbox" type="checkbox" value="@row.Name" name="lists" checked="checked" />
+                        </td>
+                        <td>@row.Name
+                        </td>
+                        <td>@row.NumberRows
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="Finish">
+            <div>
+                <div class="editor-field">
+                    <div class="editor-label">
+                        Exception Association:</div>
+                    <select id="exceptionId" name="exceptionId" style="width: 150px;">
+                        @foreach (var baseKey in baseKeys)
+                        {
+                            <option value="@baseKey.Id" @(baseKey.Id == currentBaseKey ? "selected" : "")>@baseKey.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="editor-field">
+                    <div class="editor-label">
+                        Drop Tables?:</div>
+                    <input id="drop" name="drop" type="checkbox" />
+                </div>
+               
+                <div>
+                    <a href="#" class="button" onclick="completeImport(showDialog())">Complete Import</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

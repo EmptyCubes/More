@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F5A6C82E-EBAA-4B5B-81CC-541252FF2B3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>More.Engine</RootNamespace>
+    <AssemblyName>More.Engine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MyLocalConfig|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\MyLocalConfig\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Antlr3.Runtime\3.1.3.22795\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="More.Application.BaseModel">
+      <HintPath>..\More.Web.Designer\Bin\More.Application.BaseModel.dll</HintPath>
+    </Reference>
+    <Reference Include="More.Application.Entity">
+      <HintPath>..\More.Web.Designer\Bin\More.Application.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseModel\IRulesEngineCodeProvider.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="CodeGen\Model\RuleBookTemplateModel.cs" />
+    <Compile Include="CodeGen\Model\RuleEngineCodeModel.cs" />
+    <Compile Include="CodeGen\Model\RulesEngineCodeContext.cs" />
+    <Compile Include="CodeGen\Model\RulesEngineCodeTemplate.cs" />
+    <Compile Include="CodeGen\Model\T4TemplateCodeBase.cs" />
+    <Compile Include="CodeGen\RulesEngineCodeProvider.cs" />
+    <Compile Include="CodeGen\Templates\LookupTableMethod.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LookupTableMethod.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGen\Templates\RuleBook1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RuleBook.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGen\Templates\RuleBookRules1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RuleBookRules.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluation\CompiledRuleBookBase.cs" />
+    <Compile Include="CodeGen\RatingEngineCodeTemplateBase.cs" />
+    <Compile Include="CodeGen\Templates\RulesEngineCode1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RulesEngineCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\ILookupTablesRepository.cs" />
+    <Compile Include="Interfaces\IRulesEngineImporter.cs" />
+    <Compile Include="Interfaces\IRulesEngineRepository.cs" />
+    <Compile Include="Model\CategoryModel.cs" />
+    <Compile Include="Model\CompilerErrorModel.cs" />
+    <Compile Include="Model\CompleteImportModel.cs" />
+    <Compile Include="Model\ImporterModel.cs" />
+    <Compile Include="Model\ImporterTableModel.cs" />
+    <Compile Include="Model\LookupTableColumnModel.cs" />
+    <Compile Include="Model\LookupTableKeyModel.cs" />
+    <Compile Include="Model\LookupTableModel.cs" />
+    <Compile Include="Model\LookupTableRowModel.cs" />
+    <Compile Include="Model\RuleBookAssemblyModel.cs" />
+    <Compile Include="Model\LookupType.cs" />
+    <Compile Include="Model\RuleBookError.cs" />
+    <Compile Include="Validation\IRatingRuleValidator.cs" />
+    <Compile Include="Validation\RatingRuleValidator.cs" />
+    <Compile Include="CodeGen\ContextList.cs" />
+    <Compile Include="CodeGen\CSharpSerializationVisitor.cs" />
+    <Compile Include="CodeGen\ExplainSerializationVisitor.cs" />
+    <Compile Include="CodeGen\NCalcVariableExtractionVisitor.cs" />
+    <Compile Include="CodeGen\StringUtils.cs" />
+    <Compile Include="Model\FactorTableColumnDefinition.cs" />
+    <Compile Include="BaseModel\IRuleEngineRepository.cs" />
+    <Compile Include="BaseModel\IRuleContainer.cs" />
+    <Compile Include="RulesEngine.cs" />
+    <Compile Include="Compiling\RatingEngineCompiler.cs" />
+    <Compile Include="Compiling\RuleBookViewModel.cs" />
+    <Compile Include="Model\RuleEngineRule.cs" />
+    <Compile Include="Model\RulesCollection.cs" />
+    <Compile Include="Model\LookupTable.cs" />
+    <Compile Include="Model\LookupTableKey.cs" />
+    <Compile Include="Model\LookupTableRow.cs" />
+    <Compile Include="Compiling\RuleHelper.cs" />
+    <Compile Include="Evaluation\CompiledRuleBookFactoryBase.cs" />
+    <Compile Include="BaseModel\IRater.cs" />
+    <Compile Include="BaseModel\IRuleBookTraceInformation.cs" />
+    <Compile Include="Model\RuleBookResult.cs" />
+    <Compile Include="Model\RuleBookTraceInformation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Evaluant.Calculator\NCalc.csproj">
+      <Project>{4652FE66-9698-416A-8CC9-87340D683E7A}</Project>
+      <Name>NCalc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="CodeGen\Templates\RuleBook.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>RuleBook1.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGen\Templates\RulesEngineCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>RulesEngineCode1.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGen\Templates\LookupTableMethod.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>LookupTableMethod.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGen\Templates\RuleBookRules.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>RuleBookRules1.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models2\" />
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

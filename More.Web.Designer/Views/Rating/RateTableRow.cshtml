@@ -1,0 +1,15 @@
+﻿@model LookupTableRowModel
+@using (Html.BeginForm("SaveRateTableRow","Rating",FormMethod.Post,new {  id ="rateTableRowForm"}))
+{
+    @Html.HiddenFor(p => p.RowId)
+    @Html.HiddenFor(p => p.TableId)
+    @Html.HiddenFor(p => p.Active)
+    @Html.HiddenFor(p => p.EffectiveDate)
+    @Html.HiddenFor(p => p.ChangeId)
+
+    foreach (var value in Model.Values)
+    {
+        <div><input name="Values" value="@value" /></div>
+    }
+    <input type="submit" value="Save" />
+}
